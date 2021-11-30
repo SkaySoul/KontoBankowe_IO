@@ -1,11 +1,15 @@
 public class Payment extends Operation{
 
-    @Override
-    public void writeToHistory(Account account){
+
+    public void writeToHistory(Account account, int value){
+        account.getOperationList().add("transfer: " +  value);
 
     }
 
 
+    public boolean checkConditions(Account account, int value){
 
+        return true;
+    }
 
 }

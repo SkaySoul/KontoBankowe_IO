@@ -1,9 +1,6 @@
 public class Crediting extends Operation{
 
-    public boolean checkConditions(Account account){
 
-        return true;
-    }
 
     public boolean checkValue(Account account, int value){
 
@@ -15,8 +12,13 @@ public class Crediting extends Operation{
     }
 
 
-    @Override
-    public void writeToHistory(Account account){
 
+    public void writeToHistory(Account account,int value){
+
+    }
+
+    public boolean checkConditions(Account account, int value){
+
+        return true;
     }
 }

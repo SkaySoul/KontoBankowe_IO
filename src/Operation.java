@@ -1,10 +1,10 @@
 import java.util.ArrayList;
 import java.util.List;
 
-public class Operation {
+public abstract class Operation {
     private List<String> operationType;
 
-    public void changeBalance(Account account,int type, float value){
+    public void changeBalance(Account account,boolean type, float value){
 
     }
 
@@ -12,8 +12,7 @@ public class Operation {
         return account.getCurrentBalance();
     }
 
-    public void writeToHistory(Account account){
-
-    }
+    public abstract void writeToHistory(Account account, int value);
+    public abstract boolean checkConditions(Account account, int value);
 
 }
