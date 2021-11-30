@@ -15,13 +15,13 @@ public class Transfer extends Operation{
     }
 
 
-    public boolean checkConditions(Account account, int value){
+    public boolean checkConditions(Account account, float value){
         return checkBalance(account) >= value;
     }
 
 
-    public void writeToHistory(Account account, int value){
-        account.getOperationList().add("transfer: " +  value);
+    public void writeToHistory(Account account, float value){
+        account.addToOperationList("transfer: " +  value);
     }
 
 }

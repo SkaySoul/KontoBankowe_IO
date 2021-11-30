@@ -11,30 +11,30 @@ public class Account {
     private boolean creditStatus;
 
 
-    public Account(long accountNumber, float currentBalance, String ownerName, String ownerSurname) {
+    public Account(long accountNumber, float currentBalance, String ownerName, String ownerSurname, float creditBalance) {
         this.accountNumber = accountNumber;
         this.currentBalance = currentBalance;
         this.ownerName = ownerName;
         this.ownerSurname = ownerSurname;
-        this.operationList = new ArrayList<String>();
+        this.operationList = new ArrayList<>();
+        this.creditBalance = creditBalance;
+        this.creditStatus = creditBalance <= DataSet.maxCreditValue;
 
     }
 
-    public void makeOperation(String operationType, int value, DataSet dataSet){
-        switch(operationType.toLowerCase(Locale.ROOT)){
+    public void makeOperation(String operationType, float value, DataSet dataSet){
+        switch(operationType.toLowerCase(Locale.ENGLISH)){
             case"paymentadd":{
                 Payment operation = new Payment();
-                if(operation.checkConditions(this, value)){
-                    operation.changeBalance(this, true, value);
+                    operation.changeBalance(this,  value);
                     operation.writeToHistory(this, value);
-                }
-                else printMessage("Conditions for " + operationType + " is not met");
             }
 
             case"paymentsub":{
                 Payment operation = new Payment();
                 if(operation.checkConditions(this, value)){
-                    operation.changeBalance(this, false, value);
+                    value = -value;
+                    operation.changeBalance(this,  value);
                     operation.writeToHistory(this, value);
                 }
                 else printMessage("Conditions for " + operationType + " is not met");
@@ -48,8 +48,8 @@ public class Account {
                 if(operation.checkConditions(this, value)){
                     if (operation.searchReceiver(resnum, dataSet.getAccountList() ) != null) {
                         Account receiverAccount = operation.searchReceiver(resnum, dataSet.getAccountList());
-                        operation.changeBalance(this, false, value);
-                        operation.changeBalance(receiverAccount, true, value);
+                        operation.changeBalance(this,  value);
+                        operation.changeBalance(receiverAccount, value);
                         operation.writeToHistory(this, value);
                     }
                     else printMessage("Undefined account number");
@@ -60,7 +60,7 @@ public class Account {
             case"crediting":{
                 Crediting operation = new Crediting();
                 if (operation.checkConditions(this, value)){
-                    operation.changeBalance(this,true, value);
+                    operation.changeBalance(this, value);
                     operation.getCredit(this, value);
                     operation.writeToHistory(this, value);
                 }
@@ -93,6 +93,10 @@ public class Account {
 
     public void setOperationList(List<String> operationList) {
         this.operationList = operationList;
+    }
+
+    public void addToOperationList(String operation) {
+        this.operationList.add(operation);
     }
 
 
