@@ -2,6 +2,9 @@ import java.util.*;
 
 public class Account {
 
+
+    private String login;
+    private String password;
     private long accountNumber;
     private float currentBalance;
     private String ownerName;
@@ -11,7 +14,7 @@ public class Account {
     private boolean creditStatus;
 
 
-    public Account(long accountNumber, float currentBalance, String ownerName, String ownerSurname, float creditBalance) {
+    public Account( String login, String password, long accountNumber, float currentBalance, String ownerName, String ownerSurname, float creditBalance) {
         this.accountNumber = accountNumber;
         this.currentBalance = currentBalance;
         this.ownerName = ownerName;
@@ -19,52 +22,55 @@ public class Account {
         this.operationList = new ArrayList<>();
         this.creditBalance = creditBalance;
         this.creditStatus = creditBalance <= DataSet.maxCreditValue;
+        this.login = login;
+        this.password = password;
 
     }
 
     public void makeOperation(String operationType, float value, DataSet dataSet){
-        switch(operationType.toLowerCase(Locale.ENGLISH)){
-            case"paymentadd":{
+        switch (operationType.toLowerCase(Locale.ENGLISH)) {
+            case "paymentadd" -> {
                 Payment operation = new Payment();
-                    operation.changeBalance(this,  value);
-                    operation.writeToHistory(this, value);
-            }
+                operation.changeBalance(this, value);
+                operation.writeToHistory(this, value);
 
-            case"paymentsub":{
+            }
+            case "paymentsub" -> {
                 Payment operation = new Payment();
-                if(operation.checkConditions(this, value)){
+                if (operation.checkConditions(this, value)) {
                     value = -value;
-                    operation.changeBalance(this,  value);
+                    operation.changeBalance(this, value);
                     operation.writeToHistory(this, value);
-                }
-                else printMessage("Conditions for " + operationType + " is not met");
-            }
+                } else printMessage("Conditions for " + operationType + " is not met");
 
-            case"transfer":{
+            }
+            case "transfer" -> {
                 Scanner in = new Scanner(System.in);
                 printMessage("Please insert receiver account number");
                 int resnum = in.nextInt();
                 Transfer operation = new Transfer();
-                if(operation.checkConditions(this, value)){
-                    if (operation.searchReceiver(resnum, dataSet.getAccountList() ) != null) {
+                if (operation.checkConditions(this, value)) {
+                    if (operation.searchReceiver(resnum, dataSet.getAccountList()) != null) {
                         Account receiverAccount = operation.searchReceiver(resnum, dataSet.getAccountList());
-                        operation.changeBalance(this,  value);
+                        operation.changeBalance(this, value);
                         operation.changeBalance(receiverAccount, value);
                         operation.writeToHistory(this, value);
-                    }
-                    else printMessage("Undefined account number");
+                    } else printMessage("Undefined account number");
 
-                }
-                else printMessage("Conditions for " + operationType + " is not met");
+                } else printMessage("Conditions for " + operationType + " is not met");
+                in.close();
+
             }
-            case"crediting":{
+            case "crediting" -> {
                 Crediting operation = new Crediting();
-                if (operation.checkConditions(this, value)){
+                if (operation.checkConditions(this, value)) {
                     operation.changeBalance(this, value);
                     operation.getCredit(this, value);
                     operation.writeToHistory(this, value);
-                }
-                else printMessage("Conditions for " + operationType + " is not met");
+                } else printMessage("Conditions for " + operationType + " is not met");
+            }
+            default ->{
+
             }
         }
     }
@@ -131,6 +137,21 @@ public class Account {
 
     public void setAccountNumber(long accountNumber) {
         this.accountNumber = accountNumber;
+    }
+    public String getLogin() {
+        return login;
+    }
+
+    public void setLogin(String login) {
+        this.login = login;
+    }
+
+    public String getPassword() {
+        return password;
+    }
+
+    public void setPassword(String password) {
+        this.password = password;
     }
 
     public void printMessage(String message){
