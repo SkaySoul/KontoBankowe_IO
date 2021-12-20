@@ -40,7 +40,7 @@ public class DataSet{
         try{
             File file = new File("src/Accounts.json");
             ObjectMapper mapper = new ObjectMapper();
-            mapper.writeValue(file, accountList);
+            mapper.writerWithDefaultPrettyPrinter().writeValue(file, accountList);
 
         }
         catch (IOException e){
