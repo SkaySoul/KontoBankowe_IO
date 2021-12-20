@@ -1,77 +1,102 @@
-import java.util.*;
+import com.fasterxml.jackson.annotation.JsonProperty;
+import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
 
-public class Account {
+import java.io.Serializable;
+import java.util.*;
+@JsonDeserialize
+public class Account implements Config {
 
 
     private String login;
+
     private String password;
+
     private long accountNumber;
-    private float currentBalance;
+
+    public float currentBalance;
+
     private String ownerName;
+
     private String ownerSurname;
-    private List<String> operationList;
-    private float creditBalance;
-    private boolean creditStatus;
+    public List<String> operationList;
+
+    public float creditBalance;
+    public boolean creditStatus;
 
 
-    public Account( String login, String password, long accountNumber, float currentBalance, String ownerName, String ownerSurname, float creditBalance) {
+    public Account( @JsonProperty("login") String login ,@JsonProperty("password") String password, @JsonProperty("accountNumber") long accountNumber,@JsonProperty("currentBalance")
+            float currentBalance,@JsonProperty("ownerName") String ownerName,@JsonProperty("ownerSurname") String ownerSurname,@JsonProperty("creditBalance") float creditBalance) {
+
         this.accountNumber = accountNumber;
         this.currentBalance = currentBalance;
         this.ownerName = ownerName;
         this.ownerSurname = ownerSurname;
         this.operationList = new ArrayList<>();
         this.creditBalance = creditBalance;
-        this.creditStatus = creditBalance <= DataSet.maxCreditValue;
+        this.creditStatus = creditBalance <= maxCreditValue;
+        ;
         this.login = login;
         this.password = password;
 
     }
 
-    public void makeOperation(String operationType, float value, DataSet dataSet){
+    public void makeOperation(Account account,String operationType, float value, DataSet dataSet, Scanner in){
         switch (operationType.toLowerCase(Locale.ENGLISH)) {
-            case "paymentadd" -> {
+            case "paymentadd" : {
                 Payment operation = new Payment();
-                operation.changeBalance(this, value);
-                operation.writeToHistory(this, value);
-
+                operation.changeBalance(account, value);
+                operation.writeToHistory(account, value);
+                break;
             }
-            case "paymentsub" -> {
+            case "paymentsub" : {
                 Payment operation = new Payment();
-                if (operation.checkConditions(this, value)) {
+                if (operation.checkConditions(account, value)) {
                     value = -value;
-                    operation.changeBalance(this, value);
-                    operation.writeToHistory(this, value);
+                    operation.changeBalance(account, value);
+                    operation.writeToHistory(account, value);
                 } else printMessage("Conditions for " + operationType + " is not met");
-
+                break;
             }
-            case "transfer" -> {
-                Scanner in = new Scanner(System.in);
+            case "transfer" : {
                 printMessage("Please insert receiver account number");
                 int resnum = in.nextInt();
                 Transfer operation = new Transfer();
-                if (operation.checkConditions(this, value)) {
+                if (operation.checkConditions(account, value)) {
                     if (operation.searchReceiver(resnum, dataSet.getAccountList()) != null) {
-                        Account receiverAccount = operation.searchReceiver(resnum, dataSet.getAccountList());
-                        operation.changeBalance(this, value);
+                        Account receiverAccount = operation.searchReceiver(resnum, dataSet.accountList);
+                        operation.changeBalance(account, value);
                         operation.changeBalance(receiverAccount, value);
-                        operation.writeToHistory(this, value);
+                        operation.writeToHistory(account, value);
                     } else printMessage("Undefined account number");
 
                 } else printMessage("Conditions for " + operationType + " is not met");
-                in.close();
-
+                printMessage("Transfer was done");
+                break;
             }
-            case "crediting" -> {
+            case "crediting" : {
                 Crediting operation = new Crediting();
-                if (operation.checkConditions(this, value)) {
-                    operation.changeBalance(this, value);
-                    operation.getCredit(this, value);
-                    operation.writeToHistory(this, value);
+                if (operation.checkConditions(account, value)) {
+                    operation.changeBalance(account, value);
+                    operation.getCredit(account, value);
+                    operation.writeToHistory(account, value);
                 } else printMessage("Conditions for " + operationType + " is not met");
             }
-            default ->{
-
+            default :{
+                break;
             }
+        }
+    }
+
+    public void getAccountStatus(){
+        printMessage(getLogin());
+        printMessage(getOwnerName() + " " + getOwnerSurname());
+        printMessage(Long.toString(getAccountNumber()));
+        printMessage(Float.toString(getCurrentBalance()));
+    }
+
+    public void showOperationList(){
+        for (String operations: getOperationList()) {
+            printMessage(operations);
         }
     }
 

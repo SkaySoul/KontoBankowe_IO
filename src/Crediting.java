@@ -1,14 +1,14 @@
-public class Crediting extends Operation{
+public class Crediting extends Operation implements Config{
 
 
 
     public boolean checkValue(Account account, float value){
-        return !(account.getCreditBalance() + value > DataSet.maxCreditValue);
+        return !(account.getCreditBalance() + value > maxCreditValue);
     }
 
     public void getCredit(Account account, float value){
             account.setCreditBalance(account.getCreditBalance()+value);
-            if(account.getCreditBalance()+value > DataSet.maxCreditValue){
+            if(account.getCreditBalance()+value > maxCreditValue){
                 account.setCreditStatus(false);
             }
     }
