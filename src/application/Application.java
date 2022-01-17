@@ -65,9 +65,9 @@ public class Application {
     public static void startApplication(Account account, DataSet dataset, Scanner in) {
         while(true){
             printMessage("Please insert number of wanted operation: ");
-            printMessage("1. application.Transfer");
-            printMessage("2. application.Payment");
-            printMessage("3. application.Crediting");
+            printMessage("1. Transfer");
+            printMessage("2. Payment");
+            printMessage("3. Crediting");
             printMessage("4. Show information about account");
             printMessage("5. Show operation list");
             printMessage("6. Logout");
