@@ -50,7 +50,7 @@ public class DataSet{
 
     public void writeAccounts(){
         try{
-            File file = new File("src/Accounts.json");
+            File file = new File("src/application/Accounts.json");
             ObjectMapper mapper = new ObjectMapper();
             mapper.writerWithDefaultPrettyPrinter().writeValue(file, accountList);
 
