@@ -1,21 +1,33 @@
+package application;
+
 import java.io.*;
+import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
 
-import com.fasterxml.jackson.core.type.TypeReference;
+import application.Account;
+import application.Application;
+import application.DatabaseConnector;
 import com.fasterxml.jackson.databind.ObjectMapper;
 
 public class DataSet{
 
     public List<Account> accountList;
-
     DatabaseConnector dbConnector;
 
-    public DataSet(){
+    public DataSet() {
 
         this.accountList = new ArrayList<Account>();
-        getAccounts();
+        //getAccounts();
         dbConnector = new DatabaseConnector();
+        try {
+            dbConnector.getDbConnection();
+            //Application.printMessage("Database connection was done...");
+        }
+        catch (SQLException | ClassNotFoundException e){
+            e.getMessage();
+            e.printStackTrace();
+        }
     }
 
     public void addToDataSet(Account account){
@@ -24,7 +36,7 @@ public class DataSet{
 
     public void getAccounts() {
         try{
-            File file = new File("src/Accounts.json");
+            File file = new File("src/application/Accounts.json");
             ObjectMapper mapper = new ObjectMapper();
             Account[] accounts = mapper.readValue(file, Account[].class);
             setAccountList(List.of(accounts));

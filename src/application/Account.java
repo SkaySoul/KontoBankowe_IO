@@ -1,8 +1,13 @@
+package application;
+
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
 
-import java.io.Serializable;
-import java.util.*;
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Locale;
+import java.util.Scanner;
+
 @JsonDeserialize
 public class Account implements Config {
 
@@ -33,14 +38,14 @@ public class Account implements Config {
         this.ownerSurname = ownerSurname;
         this.operationList = new ArrayList<>();
         this.creditBalance = creditBalance;
-        this.creditStatus = creditBalance <= maxCreditValue;
+        this.creditStatus = creditBalance <= Config.maxCreditValue;
         ;
         this.login = login;
         this.password = password;
 
     }
 
-    public void makeOperation(Account account,String operationType, float value, DataSet dataSet, Scanner in){
+    public void makeOperation(Account account, String operationType, float value, DataSet dataSet, int resnum){
         switch (operationType.toLowerCase(Locale.ENGLISH)) {
             case "paymentadd" : {
                 Payment operation = new Payment();
@@ -58,19 +63,17 @@ public class Account implements Config {
                 break;
             }
             case "transfer" : {
-                printMessage("Please insert receiver account number");
-                int resnum = in.nextInt();
                 Transfer operation = new Transfer();
                 if (operation.checkConditions(account, value)) {
                     if (operation.searchReceiver(resnum, dataSet.getAccountList()) != null) {
                         Account receiverAccount = operation.searchReceiver(resnum, dataSet.accountList);
-                        operation.changeBalance(account, value);
+                        operation.changeBalance(account, -value);
                         operation.changeBalance(receiverAccount, value);
                         operation.writeToHistory(account, value);
                     } else printMessage("Undefined account number");
 
                 } else printMessage("Conditions for " + operationType + " is not met");
-                printMessage("Transfer was done");
+                printMessage("application.Transfer was done");
                 break;
             }
             case "crediting" : {

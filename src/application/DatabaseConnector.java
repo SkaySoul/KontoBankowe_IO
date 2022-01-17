@@ -1,8 +1,12 @@
+package application;
+
+import application.Config;
+
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.SQLException;
 
-public class DatabaseConnector implements Config{
+public class DatabaseConnector implements Config {
     Connection dbConnection;
 
     public Connection getDbConnection() throws ClassNotFoundException, SQLException {

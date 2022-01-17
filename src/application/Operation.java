@@ -1,5 +1,6 @@
-import java.util.ArrayList;
-import java.util.List;
+package application;
+
+import application.Account;
 
 public abstract class Operation {
     public void changeBalance(Account account, float value){

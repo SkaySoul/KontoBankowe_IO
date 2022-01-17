@@ -1,8 +1,13 @@
-public class Payment extends Operation{
+package application;
+
+import application.Account;
+import application.Operation;
+
+public class Payment extends Operation {
 
 
     public void writeToHistory(Account account, float value){
-        account.addToOperationList("Payment: " +  value);
+        account.addToOperationList("application.Payment: " +  value);
 
     }
 

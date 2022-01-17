@@ -1,4 +1,9 @@
-public class Crediting extends Operation implements Config{
+package application;
+
+import application.Account;
+import application.Config;
+
+public class Crediting extends Operation implements Config {
 
 
 
@@ -16,7 +21,7 @@ public class Crediting extends Operation implements Config{
 
 
     public void writeToHistory(Account account,float value){
-        account.addToOperationList("Crediting: " +  value);
+        account.addToOperationList("application.Crediting: " +  value);
     }
 
     public boolean checkConditions(Account account, float value){

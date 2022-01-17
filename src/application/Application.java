@@ -1,3 +1,8 @@
+package application;
+
+import application.Account;
+
+import java.sql.SQLException;
 import java.util.Objects;
 import java.util.Scanner;
 
@@ -9,7 +14,7 @@ public class Application {
         System.out.println(message);
     }
 
-    public static void main(String[] args){
+    public static void main(String[] args) throws SQLException, ClassNotFoundException {
         DataSet dataSet = new DataSet();
         Account currentAccount = null;
         Scanner in = new Scanner(System.in);
@@ -60,9 +65,9 @@ public class Application {
     public static void startApplication(Account account, DataSet dataset, Scanner in) {
         while(true){
             printMessage("Please insert number of wanted operation: ");
-            printMessage("1. Transfer");
-            printMessage("2. Payment");
-            printMessage("3. Crediting");
+            printMessage("1. application.Transfer");
+            printMessage("2. application.Payment");
+            printMessage("3. application.Crediting");
             printMessage("4. Show information about account");
             printMessage("5. Show operation list");
             printMessage("6. Logout");
@@ -71,7 +76,9 @@ public class Application {
                 case 1: {
                     printMessage("Please insert value of transfer: ");
                     float value = in.nextFloat();
-                    account.makeOperation(account,"transfer", value, dataset, in);
+                    printMessage("Please insert receiver account number");
+                    int resnum = in.nextInt();
+                    account.makeOperation(account,"transfer", value, dataset, resnum);
 
                     break;
                 }
@@ -86,14 +93,14 @@ public class Application {
                             break;
                         } else printMessage("Unresolved type of operation, please try again...");
                     }
-                    account.makeOperation(account,"payment" + type, value, dataset, in);
+                    account.makeOperation(account,"payment" + type, value, dataset, 0);
 
                     break;
                 }
                 case 3: {
                     printMessage("Please insert value of crediting: ");
                     float value = in.nextFloat();
-                    account.makeOperation(account,"crediting", value, dataset, in);
+                    account.makeOperation(account,"crediting", value, dataset, 0);
 
                     break;
                 }

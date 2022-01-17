@@ -1,6 +1,11 @@
+package application;
+
+import application.Account;
+import application.Operation;
+
 import java.util.List;
 
-public class Transfer extends Operation{
+public class Transfer extends Operation {
 
 
 
@@ -21,7 +26,7 @@ public class Transfer extends Operation{
 
 
     public void writeToHistory(Account account, float value){
-        account.addToOperationList("transfer: " +  value);
+        account.addToOperationList("application.Transfer: " +  value);
     }
 
 }
