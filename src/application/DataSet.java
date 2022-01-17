@@ -5,9 +5,7 @@ import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
 
-import application.Account;
-import application.Application;
-import application.DatabaseConnector;
+
 import com.fasterxml.jackson.databind.ObjectMapper;
 
 public class DataSet{
@@ -17,7 +15,7 @@ public class DataSet{
 
     public DataSet() {
 
-        this.accountList = new ArrayList<Account>();
+        this.accountList = new ArrayList<>();
         getAccounts();
         dbConnector = new DatabaseConnector();
         try {
@@ -25,7 +23,6 @@ public class DataSet{
             //Application.printMessage("Database connection was done...");
         }
         catch (SQLException | ClassNotFoundException e){
-            e.getMessage();
             e.printStackTrace();
         }
     }
