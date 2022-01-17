@@ -21,7 +21,7 @@ public class Crediting extends Operation implements Config {
 
 
     public void writeToHistory(Account account,float value){
-        account.addToOperationList("application.Crediting: " +  value);
+        account.addToOperationList("Crediting: " +  value);
     }
 
     public boolean checkConditions(Account account, float value){

@@ -26,7 +26,7 @@ public class Transfer extends Operation {
 
 
     public void writeToHistory(Account account, float value){
-        account.addToOperationList("application.Transfer: " +  value);
+        account.addToOperationList("Transfer: " +  value);
     }
 
 }

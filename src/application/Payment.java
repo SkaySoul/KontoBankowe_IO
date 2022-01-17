@@ -7,7 +7,7 @@ public class Payment extends Operation {
 
 
     public void writeToHistory(Account account, float value){
-        account.addToOperationList("application.Payment: " +  value);
+        account.addToOperationList("Payment: " +  value);
 
     }
 
