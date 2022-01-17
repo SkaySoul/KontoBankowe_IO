@@ -19,7 +19,7 @@ class AccountTest {
     @BeforeEach
     public void createTestData(){
         testData = new TestData(10);
-        System.out.println("Test Started");
+        System.out.println("Account Test Started");
     }
 
 
@@ -118,7 +118,7 @@ class AccountTest {
 
     @AfterAll
     static void testEnd(){
-        System.out.println("All tests are completed");
+        System.out.println("All Account tests are completed");
     }
 
 

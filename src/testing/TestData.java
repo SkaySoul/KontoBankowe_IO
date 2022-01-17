@@ -13,6 +13,11 @@ public class TestData {
         dataSetTest.setAccountList(createTestAccounts(qtt));
     }
 
+    public TestData(){
+        dataSetTest = new DataSet();
+        dataSetTest.getAccounts("/src/testing/AccountExpected.json");
+    }
+
     public List<Account> createTestAccounts(int qtt){
         List<Account> list= new ArrayList<Account>();
         for(int i = 0; i< qtt; i++){

@@ -8,9 +8,7 @@ import java.util.List;
 public class Transfer extends Operation {
 
 
-
-
-    public Account searchReceiver(int receiverAccNum, List<Account> accountList){
+    public Account searchReceiver(int receiverAccNum, List<Account> accountList) {
         for (Account account : accountList) {
             if (account.getAccountNumber() == receiverAccNum) {
                 return account;
@@ -20,13 +18,13 @@ public class Transfer extends Operation {
     }
 
 
-    public boolean checkConditions(Account account, float value){
+    public boolean checkConditions(Account account, float value) {
         return checkBalance(account) >= value;
     }
 
 
-    public void writeToHistory(Account account, float value){
-        account.addToOperationList("Transfer: " +  value);
+    public void writeToHistory(Account account, float value) {
+        account.addToOperationList("Transfer: " + value);
     }
 
 }

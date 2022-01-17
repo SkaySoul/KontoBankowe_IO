@@ -45,9 +45,36 @@ public class DataSet{
 
     }
 
+    public void getAccounts(String path) {
+        try{
+            File file = new File(path);
+            ObjectMapper mapper = new ObjectMapper();
+            Account[] accounts = mapper.readValue(file, Account[].class);
+            setAccountList(List.of(accounts));
+        }
+        catch (IOException e){
+            System.out.println("Error reading file: " + e.getMessage());
+        }
+
+
+    }
+
     public void writeAccounts(){
         try{
             File file = new File("src/application/Accounts.json");
+            ObjectMapper mapper = new ObjectMapper();
+            mapper.writerWithDefaultPrettyPrinter().writeValue(file, accountList);
+
+        }
+        catch (IOException e){
+            System.out.println("Error reading file: " + e.getMessage());
+        }
+
+    }
+
+    public void writeAccounts(String path){
+        try{
+            File file = new File(path);
             ObjectMapper mapper = new ObjectMapper();
             mapper.writerWithDefaultPrettyPrinter().writeValue(file, accountList);
 
