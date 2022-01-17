@@ -18,7 +18,7 @@ public class DataSet{
     public DataSet() {
 
         this.accountList = new ArrayList<Account>();
-        //getAccounts();
+        getAccounts();
         dbConnector = new DatabaseConnector();
         try {
             dbConnector.getDbConnection();
