@@ -73,7 +73,7 @@ public class Account implements Config {
                     } else printMessage("Undefined account number");
 
                 } else printMessage("Conditions for " + operationType + " is not met");
-                printMessage("application.Transfer was done");
+
                 break;
             }
             case "crediting" : {
