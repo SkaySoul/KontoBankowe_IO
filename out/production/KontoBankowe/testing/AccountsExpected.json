@@ -1,0 +1,31 @@
+[ {
+  "login" : "test1",
+  "password" : "test1",
+  "accountNumber" : 11111111,
+  "currentBalance" : 100,
+  "ownerName" : "test1",
+  "ownerSurname" : "test1",
+  "creditBalance" : 100,
+  "operationList" : [ ],
+  "creditStatus" : true
+}, {
+    "login" : "test2",
+    "password" : "test2",
+    "accountNumber" : 22222222,
+    "currentBalance" : 100,
+    "ownerName" : "test2",
+    "ownerSurname" : "test2",
+    "creditBalance" : 200,
+    "operationList" : [ ],
+    "creditStatus" : true
+}, {
+    "login" : "test3",
+    "password" : "test3",
+    "accountNumber" : 33333333,
+    "currentBalance" : 100,
+    "ownerName" : "test3",
+    "ownerSurname" : "test3",
+    "creditBalance" : 300,
+    "operationList" : [ ],
+    "creditStatus" : true
+}]

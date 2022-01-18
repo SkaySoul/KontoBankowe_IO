@@ -8,7 +8,7 @@ import java.util.List;
 public class Transfer extends Operation {
 
 
-    public Account searchReceiver(int receiverAccNum, List<Account> accountList) {
+    public Account searchReceiver(long receiverAccNum, List<Account> accountList) {
         for (Account account : accountList) {
             if (account.getAccountNumber() == receiverAccNum) {
                 return account;
